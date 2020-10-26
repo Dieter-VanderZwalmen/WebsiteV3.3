@@ -11,6 +11,7 @@
                     <p>
                         <label for="zoek">&nbsp;</label>
                         <input id="zoek" type="submit" value="Vind product">
+                        <input type="hidden" name="command" value="zoek">
                     </p>
                 </form>
             </article>

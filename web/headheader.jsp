@@ -15,7 +15,7 @@
         <ul>
             <li class="unlist"><a class="activeItem" href="index.jsp">Home</a></li>
             <li class="unlist"><a href="productForm.jsp">Voeg toe</a></li>
-            <li class="unlist"><a href="Overzicht.jsp">Overzicht</a></li> <!--Hoe active item aanduiden?-->
+            <li class="unlist"><a href="ProductInfo?command=overview">Overzicht</a></li>
             <li class="unlist"><a href="zoek.jsp">Zoek</a></li>
         </ul>
     </nav>

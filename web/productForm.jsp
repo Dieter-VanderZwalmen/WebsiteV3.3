@@ -2,7 +2,7 @@
 <!--Product(naam,beschrijving,calorieen,eenheid,gram);-->
 <main>
     <h1>Maak Product</h1>
-    <form method="Post" action="ProductInfo" novalidate>
+    <form method="Post" action="ProductInfo?command=voegToe" novalidate>
     <article class = "container_form">
         <p>voer gegevens in</p>
         <article id = "form">

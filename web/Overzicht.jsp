@@ -21,16 +21,18 @@
 
             <% ArrayList<Product> producten = (ArrayList<Product>) request.getAttribute("producten");
                 for (Product x: producten) {%>
+
             <tr>
                 <td><%=x.getNaam()%></td>
                 <td><%=x.getBeschrijving()%></td>
                 <td><%=x.getCalorieen() +" " + x.getEenheid()%></td>
                 <td><%=x.getGram()%></td>
                 <td><%=x.getProcent(x.getCalorieen())%>%</td>
+                <td><a href="ProductInfo?command=verwijder&naam=<%=x.getNaam()%>" class="fa fa-trash"></a></td>
+
             </tr>
             <%}%>
-            
-
+            <p id = "totaal"><%=producten.size()%></p>
 
             </tbody>
         </table>

@@ -32,10 +32,13 @@ public class ProductDB {
         }
 
     public ArrayList<Product> getProducts() {
+
         return products;
     }
-
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+    public void removeProduct(Product product){
+        products.remove(product);
     }
 }
