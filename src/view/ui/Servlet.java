@@ -1,4 +1,4 @@
-package view;
+package view.ui;
 
 import domain.db.ProductDB;
 import domain.model.Product;
