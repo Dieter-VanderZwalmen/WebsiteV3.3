@@ -25,6 +25,7 @@ public class Servlet extends HttpServlet {
 
 
     private void proccesRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //hey
         String destination = "index.jsp";
         String command = request.getParameter("command");
         if (command == null)
