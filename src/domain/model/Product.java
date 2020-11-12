@@ -6,8 +6,16 @@ public class Product {
     private int calorieen,gram;
 
     //constructor
+    /*Javabean gedoe? 7/42
+    public Product{}()
+    public String getNaam(){return naam;}
+    public void setNaam(String naam){this.naam = naam;}
+    */
 
-    public Product(String naam, String beschrijving, int calorieen,String eenheid, int gram) {
+    public Product() {
+    }
+
+    public Product(String naam, String beschrijving, int calorieen, String eenheid, int gram) {
         setNaam(naam);
         setBeschrijving(beschrijving);
         setCalorieen(calorieen);
@@ -20,20 +28,20 @@ public class Product {
 
 
     public void setNaam(String naam) {
-        if(naam == null || naam.trim().isEmpty())throw new IllegalArgumentException("mag niet leeg zijn");
+        if(naam == null || naam.trim().isEmpty())throw new IllegalArgumentException("Naam mag niet leeg zijn.");
         this.naam = naam;
     }
 
     public void setBeschrijving(String beschrijving) {
-        if(beschrijving == null || beschrijving.trim().isEmpty())throw new IllegalArgumentException("mag niet leeg zijn");
+        if(beschrijving == null || beschrijving.trim().isEmpty())throw new IllegalArgumentException("Beschrijving mag niet leeg zijn.");
         this.beschrijving = beschrijving;
     }
 
     public void setCalorieen(int calorieen) {
-        if(calorieen<=0)throw new IllegalArgumentException("mag niet leeg zijn");
+        if(calorieen<=0)throw new IllegalArgumentException("Calorieen moet een getal boven 0 zijn.");
         this.calorieen = calorieen;
     }
-    private void setEenheid(String eenheid) {
+    public void setEenheid(String eenheid) {
         this.eenheid = eenheid;
     }
 
@@ -42,7 +50,7 @@ public class Product {
     }
 
     public void setGram(int gram) {
-        if(calorieen<=0)throw new IllegalArgumentException("mag niet leeg zijn");
+        if(gram<=0)throw new IllegalArgumentException("gram moet en getal boven 0 zijn");
         this.gram = gram;
     }
 

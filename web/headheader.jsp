@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -13,10 +14,20 @@
     </article>
     <nav>
         <ul>
-            <li class="unlist"><a class="activeItem" href="index.jsp">Home</a></li>
-            <li class="unlist"><a href="productForm.jsp">Voeg toe</a></li>
-            <li class="unlist"><a href="ProductInfo?command=overview">Overzicht</a></li>
-            <li class="unlist"><a href="zoek.jsp">Zoek</a></li>
+
+            <li class="unlist" ${param.active eq "index" ? "id = activeItem" : ""}>
+                <a href="index.jsp">Home</a></li>
+
+            <li class="unlist" ${param.active eq "voegToe" ? "id = activeItem" : ""}>
+                <a href="productForm.jsp">Voeg toe</a></li>
+
+            <li class="unlist" ${param.active eq "Overzicht" ? "id = activeItem" : ""}>
+                <a href="ProductInfo?command=overview">Overzicht</a></li>
+
+            <li class="unlist" ${param.active eq "zoek" ? "id = activeItem" : ""}>
+                <a href="zoek.jsp">Zoek</a></li>
+
+
         </ul>
     </nav>
 </header>

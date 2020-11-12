@@ -41,4 +41,7 @@ public class ProductDB {
     public void removeProduct(Product product){
         products.remove(product);
     }
+    public int getAantalProducten(){
+        return products.size();
+    }
 }

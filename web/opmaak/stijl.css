@@ -17,6 +17,9 @@ body{
     text-align: center;
     min-height: 40vh;
 }
+.text_centraal2{
+    text-align: center;
+}
 #totaal{
     text-align: right;
     margin-right: 0.5em;

@@ -1,8 +1,12 @@
-<%@include file="headheader.jsp"%>
+<jsp:include page="headheader.jsp">
+    <jsp:param name="activeItem" value="voegToe"/>
+</jsp:include>
+
         <main>
             <h2>voeg een product toe</h2>
             <article class="container_form">
                 <form method="post" action="ProductInfo?command=voegToe">
+
                     <p class="vul_in">Vul onderstaande alle gegevens in:</p>
                     <article id="form">
                         <div id="column_one">
@@ -24,6 +28,6 @@
                 </form>
             </article>
         </main>
-<%@include file="footer.jsp"%>
-    </body>
-</html>
+<jsp:include page="footer.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>

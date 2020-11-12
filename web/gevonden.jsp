@@ -1,17 +1,22 @@
 <%@ page import="domain.db.ProductDB" %>
 <%@ page import="domain.model.Product" %>
 <%@ page import="java.util.ArrayList" %>
-<%@include file="headheader.jsp"%>
+<jsp:include page="headheader.jsp">
+        <jsp:param name="" value =""/>
+</jsp:include>
 
 
-<% ProductDB product = (ProductDB) request.getAttribute("product"); %>
-<% String naam = (String) request.getAttribute("naam");%>
+
+<!--ProductDB product = (ProductDB) request.getAttribute("product"); -->
+
+<!--String naam = (String) request.getAttribute("naam");-->
 <body>
 <article class="text_centraal">
     <p>Je vroeg naar volgende gegevens:
-        <%=product.findProduct(naam)%>
+        ${productNaarString}
+
     </p>
 </article>
-<%@include file="footer.jsp"%>
-</body>
-</html>
+<jsp:include page="footer.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>

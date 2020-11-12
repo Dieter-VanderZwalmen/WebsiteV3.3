@@ -1,7 +1,11 @@
-<%@include file="headheader.jsp"%>
+<jsp:include page="headheader.jsp">
+    <jsp:param name="activeItem" value="zoek"/>
+</jsp:include>
         <main>
             <article class = "contaier_form">
-                <h1>Zoek Product</h1>
+                <article class="text_centraal2">
+                    <h2>Zoek Product</h2>
+                </article>
                 <form method="Get" action="ProductInfo" novalidate>
                     <p>voer gegevens in</p>
                     <p>
@@ -16,6 +20,6 @@
                 </form>
             </article>
         </main>
-<%@include file="footer.jsp"%>
-    </body>
-</html>
+<jsp:include page="footer.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>

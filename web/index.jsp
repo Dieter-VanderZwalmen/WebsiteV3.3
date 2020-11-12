@@ -1,4 +1,7 @@
-<%@include file="headheader.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="headheader.jsp">
+    <jsp:param name="activeItem" value="index"/>
+</jsp:include>
     <main class="main_desktop">
       <article class="container container_one">
         <img id="schema" src="img/croissant.png" alt="hart">
@@ -12,6 +15,7 @@ telkens bereid volgens eigen recept en met aandacht voor intoleranties.
         </p>
       </article>
     </main>
-<%@include file="footer.jsp"%>
-  </body>
-</html>
+<!--fout ligt bij de laatste include-->
+<jsp:include page="footer.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>

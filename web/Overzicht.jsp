@@ -1,7 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="domain.model.Product" %>
 <%@ page import="domain.db.ProductDB" %>
 <%@ page import="java.util.ArrayList" %>
-<%@include file="headheader.jsp"%>
+<jsp:include page="headheader.jsp">
+    <jsp:param name="activeItem" value="Overzicht"/>
+</jsp:include>
 
 <main>
     <h2>overzicht van alle producten</h2>
@@ -18,26 +21,29 @@
             </thead>
             <tbody>
 
+            <!-- deze lijn moet nog weg maar weet nog niet hoe-->
+            <c:forEach var="x" items="${producten}">
+                <tr>
+                    <td>${x.naam}</td>
+                    <td>${x.beschrijving}</td>
+                    <td>${x.calorieen} ${x.eenheid}</td>
+                    <td>${x.gram}</td>
+                    <td>${x.getProcent(x.getCalorieen())}%</td>
+                    <td><a href="ProductInfo?command=verwijder&naam=${x.naam}" class="fa fa-trash"></a></td>
 
-            <% ArrayList<Product> producten = (ArrayList<Product>) request.getAttribute("producten");
-                for (Product x: producten) {%>
+                </tr>
 
-            <tr>
-                <td><%=x.getNaam()%></td>
-                <td><%=x.getBeschrijving()%></td>
-                <td><%=x.getCalorieen() +" " + x.getEenheid()%></td>
-                <td><%=x.getGram()%></td>
-                <td><%=x.getProcent(x.getCalorieen())%>%</td>
-                <td><a href="ProductInfo?command=verwijder&naam=<%=x.getNaam()%>" class="fa fa-trash"></a></td>
 
-            </tr>
-            <%}%>
-            <p id = "totaal"><%=producten.size()%></p>
+            </c:forEach>
+            <p id = "totaal">${teller}</p>
+
+            <!--                producten.getAantalProducten werkt niet ?
+                                maar moet wel gebruikt worden? -->
 
             </tbody>
         </table>
     </article>
 </main>
-<%@include file="footer.jsp"%>
-</body>
-</html>
+<jsp:include page="footer.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>
