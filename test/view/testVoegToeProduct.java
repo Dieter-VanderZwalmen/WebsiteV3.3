@@ -17,11 +17,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class testVoegToeProduct {
         private WebDriver driver;
         String url = "http://localhost:8080/";
+        String juisteNaam,juisteBeschrijving,juisteEenheid,juisteCalorieen,juisteGram;
 
         @Before
         public void setUp () throws Exception {
-            System.setProperty("webdriver.chrome.driver", "C:\\Users\\diete\\Desktop\\Semester2\\Web\\Programmas\\chromedriver_win32\\chromedriver.exe");
-            WebDriver driver = new ChromeDriver();
+             juisteNaam = "Wit Brood";
+             juisteBeschrijving = "Beschikbaar in groot of klein formaat";
+             juisteEenheid = "per snee";
+             juisteCalorieen = "77";
+             juisteGram = "35";
+            System.setProperty("webdriver.chrome.driver", "C:\\Users\\diete\\Desktop\\Semester3\\Web2\\Programmas\\chromedriver_win32\\chromedriver.exe");
+            driver = new ChromeDriver();
             driver.get(url + "productForm.jsp");
         }
 
@@ -34,10 +40,10 @@ public class testVoegToeProduct {
         //waarom aparte klasse gemaakt testLeegVoegToeFormulier als het opniuew gemaakt wordt?
         @Test
         public void test_AlleVeldenLeeg_TerugOpFormulier_AlleErrors () {
-            //roep testLeegVoegToeFormulier op?
             //in demo vullen ze alles in met "" overbodig?
-
-            driver.findElement(By.id("submit")).click();
+            WebElement knop = driver.findElement(By.id("vind"));
+            knop.click();
+            //driver.findElement(By.id("vind")).click();
 
             ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
 
@@ -45,6 +51,7 @@ public class testVoegToeProduct {
             assertTrue(containsWebElementsWithText(lis, "Beschrijving mag niet leeg zijn."));
             assertTrue(containsWebElementsWithText(lis, "Calorieen moet een getal boven 0 zijn."));
             assertTrue(containsWebElementsWithText(lis, "Gram moet een getal boven 0 zijn."));
+            driver.quit();
         }
         @Test
         public void test_NaamIsLeeg () {
@@ -57,11 +64,13 @@ public class testVoegToeProduct {
             naamInput.clear();
             naamInput.sendKeys("");
 
-            driver.findElement(By.id("submit")).click();
+            driver.findElement(By.id("vind")).click();
 
             ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
             assertTrue(containsWebElementsWithText(lis, "Naam mag niet leeg zijn."));
+            //driver.quit();
         }
+        /* overbodig?
         @Test
         public void test_BeschrijvingIsLeeg () {
             //overbodig door public void test_AlleVeldenLeeg_TerugOpFormulier_AlleErrors()?
@@ -73,7 +82,7 @@ public class testVoegToeProduct {
             //of zie test_NaamIsLEeg
 
         }
-
+        */
         //Moeten de volgende test uitgevoerd worden? Geleerd bij oop maar zie het nut niet om en nul en negatieve getallen te testen indien de voorwaarde (Gram>0) is idem voor calorieen
         @Test
         public void test_CalorieenIsNul () {
@@ -83,10 +92,11 @@ public class testVoegToeProduct {
             calorieenInput.clear();
             calorieenInput.sendKeys("0");
 
-            driver.findElement(By.id("submit")).click();
+            driver.findElement(By.id("vind")).click();
 
             ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
             assertTrue(containsWebElementsWithText(lis, "Calorieen moet een getal boven 0 zijn."));
+            driver.quit();
 
         }
         @Test
@@ -97,51 +107,61 @@ public class testVoegToeProduct {
             calorieenInput.clear();
             calorieenInput.sendKeys("-10");
 
-            driver.findElement(By.id("submit")).click();
+            driver.findElement(By.id("vind")).click();
 
             ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
             assertTrue(containsWebElementsWithText(lis, "Calorieen moet een getal boven 0 zijn."));
-
+            driver.quit();
         }
         @Test
         public void test_GramIsNul () {
-            //zie calorieen
+            vullAllesJuistIn();
+
+            WebElement gramInput = driver.findElement(By.id("gram"));
+            gramInput.clear();
+            gramInput.sendKeys("0");
+
+            driver.findElement(By.id("vind")).click();
+
+            ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
+            assertTrue(containsWebElementsWithText(lis, "Gram moet een getal boven 0 zijn."));
         }
         @Test
         public void test_GramIsNegatief () {
-            //zie calorieen
+            vullAllesJuistIn();
+
+            WebElement gramInput = driver.findElement(By.id("gram"));
+            gramInput.clear();
+            gramInput.sendKeys("-3");
+
+            driver.findElement(By.id("vind")).click();
+
+            ArrayList<WebElement> lis = (ArrayList<WebElement>) driver.findElements(By.tagName("li"));
+            assertTrue(containsWebElementsWithText(lis, "Gram moet een getal boven 0 zijn."));
         }
 
 
         @Test
         public void test_AllesJuistIngevoerd_GaNaarOverview () {
-            //roep volledigJuistVoegTOeFOrm op?
-
             vullAllesJuistIn();
-            driver.findElement(By.id("submit")).click();
+            driver.findElement(By.id("vind")).click();
 
         /* werkt niet omdat je altijd op http://localhost:8080/ProductInfo?command=voegToe uitkomt
         String URL = driver.getCurrentUrl();
         assertEquals(URL, "http://localhost:8080" );
         */
-
             //dus zoek op <h2>OVERZICHT VAN ALLE PRODUCTEN</h2>
-            assertEquals("OVERZICHT VAN ALLE PRODUCTEN", driver.findElement(By.tagName("<h2>")));
+            ArrayList<WebElement> h2s = (ArrayList<WebElement>) driver.findElements(By.tagName("h2"));
+            assertTrue(containsWebElementsWithText(h2s,"OVERZICHT VAN ALLE PRODUCTEN"));
+            //vind het net toegevoegd product door naar de juiste "td"s te zoeken
 
+            ArrayList<WebElement> tds = (ArrayList<WebElement>) driver.findElements(By.tagName("td"));
+            assertTrue(containsWebElementsWithText(tds,juisteNaam));
+            assertTrue(containsWebElementsWithText(tds, juisteBeschrijving));
+            assertTrue(containsWebElementsWithText(tds, juisteCalorieen +" " + juisteEenheid));
+            assertTrue(containsWebElementsWithText(tds, juisteGram));
 
         }
-        @Test
-        public void test_ProductWordtToegevoegdInDeLijst () {
-            vullAllesJuistIn();
-            driver.findElement(By.id("submit")).click();
-            //vind de meegegeven data in de lijst
-
-
-        }
-
-
-        //methode van Voorbeeld  kan op simpelere manier?
-        //moet nog uitzoeken
         private boolean containsWebElementsWithText (ArrayList < WebElement > elements, String text){
             for (int i = 0; i < elements.size(); i++) {
                 if (elements.get(i).getText().equals(text)) {
@@ -154,23 +174,23 @@ public class testVoegToeProduct {
         private void vullAllesJuistIn(){
             WebElement naamInput = driver.findElement(By.id("naam"));
             naamInput.clear();
-            naamInput.sendKeys("Wit Brood");
+            naamInput.sendKeys(juisteNaam);
 
             WebElement beschrijvingInput = driver.findElement(By.id("beschrijving"));
             beschrijvingInput.clear();
-            beschrijvingInput.sendKeys("Beschikbaar in groot of klein formaat");
+            beschrijvingInput.sendKeys(juisteBeschrijving);
 
             WebElement calorieenInput = driver.findElement(By.id("calorieen"));
             calorieenInput.clear();
-            calorieenInput.sendKeys("77");
+            calorieenInput.sendKeys(juisteCalorieen);
 
             WebElement eenheidInput = driver.findElement(By.id("eenheid"));
             eenheidInput.clear();
-            eenheidInput.sendKeys("per snee");
+            eenheidInput.sendKeys(juisteEenheid);
 
             WebElement gramInput = driver.findElement(By.id("gram"));
             gramInput.clear();
-            gramInput.sendKeys("35");
+            gramInput.sendKeys(juisteGram);
 
 
         }

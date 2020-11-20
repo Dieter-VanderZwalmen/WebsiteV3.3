@@ -17,11 +17,24 @@
                 <td>Calorieen</td>
                 <td>Gram</td>
                 <td>Percentage</td>
+
+                <td>
+                    <div class="dropdown">
+                        <a class="fa fa-filter" aria-hidden="true"></a>
+                        <div class="dropdown-content">
+                            <a href="ProductInfo?command=setCookieLocatie&cookieLocatie=Betekom">Betekom</a>
+                            <a href="ProductInfo?command=setCookieLocatie&cookieLocatie=Rotselaar">Rotselaar</a>
+                            <a href="ProductInfo?command=setCookieLocatie&cookieLocatie=Beide">Beide</a>
+                        </div>
+                    </div>
+                </td>
+
+
+
             </tr>
             </thead>
             <tbody>
 
-            <!-- deze lijn moet nog weg maar weet nog niet hoe-->
             <c:forEach var="x" items="${producten}">
                 <tr>
                     <td>${x.naam}</td>
@@ -35,10 +48,8 @@
 
 
             </c:forEach>
-            <p id = "totaal">${teller}</p>
 
-            <!--                producten.getAantalProducten werkt niet ?
-                                maar moet wel gebruikt worden? -->
+            <p id = "totaal">${teller}</p>
 
             </tbody>
         </table>

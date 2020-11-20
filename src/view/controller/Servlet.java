@@ -5,6 +5,7 @@ import domain.model.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 
 @WebServlet("/ProductInfo")
 public class Servlet extends HttpServlet {
-    private ProductDB x = new ProductDB();
+    private final ProductDB x = new ProductDB();
+    Cookie locatieCookie = new Cookie("Locatie","Beide");
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,19 +28,19 @@ public class Servlet extends HttpServlet {
 
 
     private void proccesRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String destination = "index.jsp";
+        String destination;
         String command = request.getParameter("command");
         if (command == null)
             command= "";
         switch (command) {
             case "verwijder":
-                destination = verwijder(request);
+                destination = verwijder();
                 break;
             case "verwijderBevestig":
                 destination = verwijderBevestig(request);
                 break;
             case "overview":
-                destination = overzicht(request);
+                destination = overzicht(request,locatieCookie);//locatie == Cookie locatie standaard als beide ingesteld
                 break;
             case "voegToe":
                 destination = voegToe(request);
@@ -46,17 +48,25 @@ public class Servlet extends HttpServlet {
             case "zoek":
                 destination = zoek(request);
                 break;
+            case "setCookieLocatie":
+                destination = setCookieLocatie(request);
+                break;
+            default:
+                destination = "index.jsp";
+
         }
         request.getRequestDispatcher(destination).forward(request, response);
     }
+
+
 
     private String verwijderBevestig(HttpServletRequest request) {
             String naam= request.getParameter("naam");
 
             x.removeProduct(x.findProduct(naam));
-            return overzicht(request);
+            return overzicht(request,locatieCookie);
         }
-    private String verwijder(HttpServletRequest request) {
+    private String verwijder() {
         //request.setAttribute("naam",request.getParameter("naam"));
         return "verwijderBevestig.jsp";
     }
@@ -83,12 +93,19 @@ public class Servlet extends HttpServlet {
     }
 
 
-    private String overzicht(HttpServletRequest request) {
-        int teller = x.getAantalProducten();
-        request.setAttribute("teller",teller);
+    private String overzicht(HttpServletRequest request,Cookie cookie) {
+        request.setAttribute("teller",x.getAantalProducten(locatieCookie.getValue()));
 
-        request.setAttribute("producten", x.getProducts());
+        request.setAttribute("producten", x.getProductsLocatie(cookie.getValue()));
         return "Overzicht.jsp";
+
+    }
+    private String setCookieLocatie(HttpServletRequest request) {
+        //locatieCookie.setValue(String.valueOf(request.getAttribute("setLocatie")));
+        locatieCookie.setValue(request.getParameter("cookieLocatie")); //verschil tussen de 2?
+
+        return overzicht(request,locatieCookie);
+
     }
 
 //###########################################################################################
@@ -101,13 +118,14 @@ public class Servlet extends HttpServlet {
         setCalorieeen(product,request,errors);
         setEenheid(product,request,errors);
         setGram(product,request,errors);
+        setLocatie(product,request,errors);
 
 
         if(errors.size() == 0){
             //indien de meegegeven waardes niet juist zijn?
             try{
                 x.addProduct(product);
-                return overzicht(request);//overzicht(request,response) wordt als voorbeeld oplossing gegeven is de "response" nodig?
+                return overzicht(request,locatieCookie);//overzicht(request,response) wordt als voorbeeld oplossing gegeven is de "response" nodig?
             }catch(IllegalArgumentException exc){
                 errors.add(exc.getMessage());
             }
@@ -138,13 +156,14 @@ public class Servlet extends HttpServlet {
         }
 
     }
+
     private void setCalorieeen(Product product, HttpServletRequest request, ArrayList<String> errors) {
         String calorieeen = request.getParameter("calorieen");
         try{
             product.setCalorieen(Integer.parseInt(calorieeen));
             request.setAttribute("calorieeenVorigeWaarde",calorieeen);
         }catch(NumberFormatException exc){
-            errors.add("Calorieen moet een getal boven 0 zijn.");
+            errors.add("Calorieen moet een getal boven 0 zijn.ServletError");
         }catch(IllegalArgumentException exc){
             errors.add(exc.getMessage());
         }
@@ -161,7 +180,7 @@ public class Servlet extends HttpServlet {
     private void setGram(Product product, HttpServletRequest request, ArrayList<String> errors) {
         String gram = request.getParameter("gram");
         try{
-            product.setCalorieen(Integer.parseInt(gram));
+            product.setGram(Integer.parseInt(gram));
             request.setAttribute("gramVorigeWaarde",gram);
         }catch(NumberFormatException ecx){
             errors.add("Gram moet een getal boven 0 zijn.");
@@ -169,6 +188,46 @@ public class Servlet extends HttpServlet {
             errors.add(exc.getMessage());
         }
     }
+
+    private void setLocatie(Product product, HttpServletRequest request, ArrayList<String> errors) {
+        String locatie = request.getParameter("locatie");
+
+        try{
+            product.setLocatie(locatie);
+            request.setAttribute("locatieVorigeWaarde",locatie);
+        }catch(NullPointerException exc){//indien niets?
+            errors.add(exc.getMessage());
+        }
+
+    }
+
+
+
+    //overloop al je cookies
+    private Cookie getCookieWithKey(HttpServletRequest request, String key) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null)
+            return null;
+        for (Cookie cookie : cookies
+        ) {
+            if (cookie.getName().equals(key))
+                return cookie;
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 //###########################################################################################
     /*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

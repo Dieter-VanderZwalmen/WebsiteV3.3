@@ -27,7 +27,6 @@
             <li class="unlist" ${param.active eq "zoek" ? "id = activeItem" : ""}>
                 <a href="zoek.jsp">Zoek</a></li>
 
-
         </ul>
     </nav>
 </header>

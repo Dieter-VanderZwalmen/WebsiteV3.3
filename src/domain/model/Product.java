@@ -2,7 +2,7 @@ package domain.model;
 
 public class Product {
     //gegevens
-    private String naam,beschrijving,eenheid;
+    private String naam,beschrijving,eenheid,locatie;
     private int calorieen,gram;
 
     //constructor
@@ -15,12 +15,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(String naam, String beschrijving, int calorieen, String eenheid, int gram) {
+    public Product(String naam, String beschrijving, int calorieen, String eenheid, int gram,String locatie) {
         setNaam(naam);
         setBeschrijving(beschrijving);
         setCalorieen(calorieen);
         setEenheid(eenheid);
         setGram(gram);
+        setLocatie(locatie);
     }
 
 
@@ -50,8 +51,12 @@ public class Product {
     }
 
     public void setGram(int gram) {
-        if(gram<=0)throw new IllegalArgumentException("gram moet en getal boven 0 zijn");
+        if(gram<=0)throw new IllegalArgumentException("Gram moet een getal boven 0 zijn.");
         this.gram = gram;
+    }
+    public void setLocatie(String locatie) {
+        if(locatie == null ||locatie.trim().isEmpty())throw new IllegalArgumentException("Locatie mag niet leeg zijn.");
+        this.locatie = locatie;
     }
 
     public String getNaam() {
@@ -70,10 +75,14 @@ public class Product {
         return gram;
     }
 
+    public String getLocatie() {
+        return locatie;
+    }
 
     public double getProcent(int calorieen){
         return calorieen/2000.0*100;
     }
+
     //momenteel overbodig? kan gebruikt worden om zelfde product niet 2keer te laten toevoegen?
     /*
     @Override
@@ -86,4 +95,6 @@ public class Product {
     public String toString() {
         return this.naam + " is een "+ this.beschrijving+" met " + this.calorieen +" calorieen " + this.getEenheid() +" dit is "+ this.gram + " gram.";
     }
+
+
 }

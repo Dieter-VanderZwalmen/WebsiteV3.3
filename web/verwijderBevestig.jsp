@@ -6,7 +6,6 @@
 
         <article>
             <form id="zoek" action="ProductInfo?command=verwijderBevestig&naam=${param.naam}" method="POST">
-                                                                                request.getParameter("naam")
                 <input class="verstuur" type="submit" value="Zeker">
                 <a class="verstuur toch_niet" href="ProductInfo?command=overzicht" >Terug </a>
             </form>

@@ -51,9 +51,19 @@
                             <input id="gram" name="gram" type="number" value="" required>
                         </p>
                         <p>
+                            <label class="control-label" for="locatie">Locatie:</label>
+                            <select id="locatie" name="locatie" >
+                                <option value="Betekom">Betekom</option>
+                                <option value="Rotselaar">Rotselaar</option>
+                                <option value="Beide">Beide</option>
+                            </select>
+                        </p>
+                <article class="knop_centraal">
+                        <p>
                             <label for="vind">&nbsp;</label>
                             <input id="vind" type="submit" value="Voeg product toe">
                         </p>
+                </article>
             </div>
 
     </article>
