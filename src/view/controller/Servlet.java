@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @WebServlet("/ProductInfo")
 public class Servlet extends HttpServlet {
     private final ProductDB x = new ProductDB();
-    Cookie locatieCookie = new Cookie("Locatie","Beide");
+
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,19 +37,19 @@ public class Servlet extends HttpServlet {
                 destination = verwijder();
                 break;
             case "verwijderBevestig":
-                destination = verwijderBevestig(request);
+                destination = verwijderBevestig(request,response);
                 break;
             case "overview":
-                destination = overzicht(request,locatieCookie);//locatie == Cookie locatie standaard als beide ingesteld
+                destination = overzicht(request,response);//locatie == Cookie locatie standaard als beide ingesteld
                 break;
             case "voegToe":
-                destination = voegToe(request);
+                destination = voegToe(request,response);
                 break;
             case "zoek":
                 destination = zoek(request);
                 break;
             case "setCookieLocatie":
-                destination = setCookieLocatie(request);
+                destination = setCookieLocatie(request,response);
                 break;
             default:
                 destination = "index.jsp";
@@ -60,11 +60,11 @@ public class Servlet extends HttpServlet {
 
 
 
-    private String verwijderBevestig(HttpServletRequest request) {
+    private String verwijderBevestig(HttpServletRequest request,HttpServletResponse reponse) {
             String naam= request.getParameter("naam");
 
             x.removeProduct(x.findProduct(naam));
-            return overzicht(request,locatieCookie);
+            return overzicht(request,reponse);
         }
     private String verwijder() {
         //request.setAttribute("naam",request.getParameter("naam"));
@@ -93,23 +93,29 @@ public class Servlet extends HttpServlet {
     }
 
 
-    private String overzicht(HttpServletRequest request,Cookie cookie) {
-        request.setAttribute("teller",x.getAantalProducten(locatieCookie.getValue()));
+    private String overzicht(HttpServletRequest request,HttpServletResponse response) {
+        Cookie cookie = getCookieWithKey(request, "Locatie") != null ? getCookieWithKey(request, "Locatie"): new Cookie("Locatie","Beide");
+        String c = getCookieWithKey(request, "Locatie") == null ? "beide": cookie.getValue();
+        return overzicht(request,response,c);
 
-        request.setAttribute("producten", x.getProductsLocatie(cookie.getValue()));
+    }
+    private String overzicht(HttpServletRequest request, HttpServletResponse response, String cookieLocatie) {
+        request.setAttribute("teller",x.getAantalProducten(cookieLocatie));
+        request.setAttribute("producten", x.getProductsLocatie(cookieLocatie));
         return "Overzicht.jsp";
+    }
+    private String setCookieLocatie(HttpServletRequest request,HttpServletResponse response) {
+
+        Cookie locatieCookie = new Cookie("Locatie",request.getParameter("cookieLocatie"));
+        response.addCookie(locatieCookie);
+        return overzicht(request,response,request.getParameter("cookieLocatie"));
 
     }
-    private String setCookieLocatie(HttpServletRequest request) {
-        //locatieCookie.setValue(String.valueOf(request.getAttribute("setLocatie")));
-        locatieCookie.setValue(request.getParameter("cookieLocatie")); //verschil tussen de 2?
 
-        return overzicht(request,locatieCookie);
 
-    }
 
-//###########################################################################################
-    private String voegToe(HttpServletRequest request) {
+    //###########################################################################################
+    private String voegToe(HttpServletRequest request,HttpServletResponse reponse) {
         ArrayList<String> errors = new ArrayList<>();//schrijf alle errors hierinweg
         Product product = new Product();//nieuw instantie v product
         //setters
@@ -125,7 +131,7 @@ public class Servlet extends HttpServlet {
             //indien de meegegeven waardes niet juist zijn?
             try{
                 x.addProduct(product);
-                return overzicht(request,locatieCookie);//overzicht(request,response) wordt als voorbeeld oplossing gegeven is de "response" nodig?
+                return overzicht(request,reponse);//overzicht(request,response) wordt als voorbeeld oplossing gegeven is de "response" nodig?
             }catch(IllegalArgumentException exc){
                 errors.add(exc.getMessage());
             }

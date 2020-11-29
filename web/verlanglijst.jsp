@@ -1,13 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="domain.model.Product" %>
-<%@ page import="domain.db.ProductDB" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:include page="headheader.jsp">
-    <jsp:param name="activeItem" value="Overzicht"/>
-</jsp:include>
 
+<jsp:include page="headheader.jsp">
+    <jsp:param name="" value =""/>
+</jsp:include>
 <main>
-    <h2>overzicht van alle producten</h2>
+    <h2>verlanglijst</h2>
     <article class="container_table">
         <table>
             <thead id="head_tr">
@@ -17,7 +13,6 @@
                 <td>Calorieen</td>
                 <td>Gram</td>
                 <td>Percentage</td>
-
                 <td>
                     <div class="dropdown">
                         <a class="fa fa-filter" aria-hidden="true"></a>
@@ -29,27 +24,20 @@
                     </div>
                 </td>
 
-
-
             </tr>
             </thead>
             <tbody>
-
-            <c:forEach var="x" items="${producten}">
                 <tr>
-                    <td>${x.naam}</td>
-                    <td>${x.beschrijving}</td>
-                    <td>${x.calorieen} ${x.eenheid}</td>
-                    <td>${x.gram}</td>
-                    <td>${x.getProcent(x.getCalorieen())}%</td>
-                    <td><a href="ProductInfo?command=verwijder&naam=${x.naam}" class="fa fa-trash"></a></td><!--vuilbakjes voor delete--->
-                    <td><a href="#" class="fa fa-heart" aria-hidden="true"></a></td> <!-- hartje voor verlang lijst-->
+                    <td>naam</td>
+                    <td>beschrijving}</td>
+                    <td>x.calorieenx.eenheid}</td>
+                    <td>x.gram}</td>
+                    <td>x.getProcent(x.getCalorieen())}%</td>
+                    <td><a href="ProductInfo?command=verwijder&naam=naam" class="fa fa-trash"></a></td><!--vuilbakjes voor delete--->
                 </tr>
 
 
-            </c:forEach>
-
-            <p id = "totaal">${teller}</p>
+            <p id = "totaal">5</p>
 
             </tbody>
         </table>
