@@ -25,7 +25,10 @@ body{
 .knop_centraal{
     align-content: center;
 }
-
+#container_table{
+    display: flex;
+    align-self: flex-end;
+}
 
 #totaal{
     text-align: right;
@@ -138,7 +141,7 @@ main{
 
 /* ********* FOOTER ********** */
 footer{
-    margin-top: 30px;
+    margin-top: 43px;
     padding: 16px 0;
     border-top: 4px solid #000000;
     /*background-color: #F9EBE8;*/
@@ -147,6 +150,9 @@ footer{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    bottom:0;
+    width: 100%;
 }
 
 footer p{
@@ -202,15 +208,18 @@ article.container_table{
     padding: 1em;
     border-radius: 10px;
     height: 15em;
-    display: flex;
-    justify-content: center;
-    flex-direction: column-reverse;
+
 }
+
 
 /* Streep onder overzicht !!!!!!!!!!!!!!!!*/
 thead#head_tr tr td{
     text-transform: uppercase;
     border-bottom: 1px solid #BDBDBD;
+}
+.teller{
+    display:flex;
+    justify-content: flex-end;
 }
 
 /* *********** ZOEK ********** */

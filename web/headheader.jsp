@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Van Praet</title>
-    <link rel="stylesheet" href="opmaak/stijl.css">
-    <link rel="icon" href="img/logo.png">
-</head>
 <body>
 <header>
     <article id="header_img_logo">
@@ -26,6 +17,9 @@
 
             <li class="unlist" ${param.active eq "zoek" ? "id = activeItem" : ""}>
                 <a href="zoek.jsp">Zoek</a></li>
+
+            <li class="unlist" ${param.active eq "zoek" ? "id = activeItem" : ""}>
+                <a href="ProductInfo?command=overviewV" class="fa fa-heart" aria-hidden="true"></a></li>
 
 
         </ul>

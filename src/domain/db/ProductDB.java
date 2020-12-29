@@ -5,7 +5,7 @@ import domain.model.Product;
 import java.util.ArrayList;
 
 public class ProductDB {
-    private ArrayList<Product> products,productsB;
+    private ArrayList<Product> products;
 
 
     public ProductDB() {
@@ -46,8 +46,20 @@ public class ProductDB {
     public ArrayList<Product> getProducts() {
         return products;
     }
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public boolean updateProduct(Product product,Product nieuwProduct){
+        products.remove(product);
+        products.add(nieuwProduct);
+        return true;
+    }
+    public boolean addProduct(Product product) {
+        if(this.products.contains(product)){
+            return false;
+        }
+        else{
+            this.products.add(product);
+            return true;
+        }
+        //intellij wilt dit in void maar boolean lijkt mij logischer =>mogelijk om te checken of je product is toegevoegd
     }
     public void removeProduct(Product product){
         products.remove(product);

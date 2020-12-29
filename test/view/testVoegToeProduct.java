@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-//Test klasse voegToe.jsp
+//Test klasse ProductForm.jsp
 //enkel eenheid mag voorlopig leeg zijn of eender welke string
 
 public class testVoegToeProduct {
@@ -39,7 +39,7 @@ public class testVoegToeProduct {
         //welke testen moeten er exact uitgevoerd worden?
         //waarom aparte klasse gemaakt testLeegVoegToeFormulier als het opniuew gemaakt wordt?
         @Test
-        public void test_AlleVeldenLeeg_TerugOpFormulier_AlleErrors () {
+        public void test_AlleVeldenLeeg_TerugOpFormulier_AlleErrors() {
             //in demo vullen ze alles in met "" overbodig?
             WebElement knop = driver.findElement(By.id("vind"));
             knop.click();
@@ -54,7 +54,7 @@ public class testVoegToeProduct {
             driver.quit();
         }
         @Test
-        public void test_NaamIsLeeg () {
+        public void test_lsNaamIsLeeg_RestJuist_GeefFoutboodschap() {
             //overbodig door public void test_AlleVeldenLeeg_TerugOpFormulier_AlleErrors()?
 
             vullAllesJuistIn();
@@ -85,7 +85,7 @@ public class testVoegToeProduct {
         */
         //Moeten de volgende test uitgevoerd worden? Geleerd bij oop maar zie het nut niet om en nul en negatieve getallen te testen indien de voorwaarde (Gram>0) is idem voor calorieen
         @Test
-        public void test_CalorieenIsNul () {
+        public void test_CalorieenIsNul_RestJuist_GeefFoutboodschap() {
             vullAllesJuistIn();
 
             WebElement calorieenInput = driver.findElement(By.id("calorieen"));
@@ -100,7 +100,7 @@ public class testVoegToeProduct {
 
         }
         @Test
-        public void test_CalorieenIsNegatief () {
+        public void test_CalorieenIsNegatief_RestJuist_GeefFoutboodschap() {
             vullAllesJuistIn();
 
             WebElement calorieenInput = driver.findElement(By.id("calorieen"));
@@ -114,7 +114,7 @@ public class testVoegToeProduct {
             driver.quit();
         }
         @Test
-        public void test_GramIsNul () {
+        public void test_GramIsNul_RestJuist_GeefFoutboodschap() {
             vullAllesJuistIn();
 
             WebElement gramInput = driver.findElement(By.id("gram"));
@@ -127,7 +127,7 @@ public class testVoegToeProduct {
             assertTrue(containsWebElementsWithText(lis, "Gram moet een getal boven 0 zijn."));
         }
         @Test
-        public void test_GramIsNegatief () {
+        public void test_GramIsNegatief_RestJuist_GeefFoutboodschap() {
             vullAllesJuistIn();
 
             WebElement gramInput = driver.findElement(By.id("gram"));

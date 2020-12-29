@@ -1,5 +1,7 @@
 package domain.model;
 
+import java.util.Objects;
+
 public class Product {
     //gegevens
     private String naam,beschrijving,eenheid,locatie;
@@ -89,6 +91,19 @@ public class Product {
     public boolean equals(Product o) {
         if(this.naam.equals(o.getNaam())) return true;
         else return false;
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(naam, product.naam);
+    }
+    /*
+    @Override
+    public int hashCode() {
+        return Objects.hash(naam, beschrijving, eenheid, locatie, calorieen, gram);
     }*/
 
     @Override
